@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeCanvas</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-ocean.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="editor-section">
+                    <div class="editor-header">
+                        <div class="editor-title">
+                            <span class="code">Code</span><span class="canvas">Canvas</span></div>
+                    </div>
+                    <div class="editor-controls">
+
+                        <div class="tabs">
+                        <button role="tab" aria-selected="true" aria-controls="html-panel">HTML</button>
+                        <button role="tab" aria-selected="false" aria-controls="css-panel">CSS</button>
+                        <button role="tab" aria-selected="false" aria-controls="js-panel">JS</button>
+                    </div>
+                    
+                    <!-- Theme Toggle Button -->
+                    <div class="theme-toggle">
+                    <button id="theme-toggle">🌙</button>
+                    </div>
+                    <!-- Project Name (always visible) -->
+                    <div class="project-name">
+                        <input type="text" id="saveName" placeholder="Project Name" />
+                        <button id="runBtn">Run</button>
+                    </div>
+
+                    <!-- Hamburger + Hidden Menu -->
+                    <div class="hamburger-container">
+                        <div class="hamburger" id="hamburger">&#9776;</div>
+                        <div class="menu" id="menu">
+                            <button id="newFileBtn">New File</button>
+                            <button id="saveBtn">Save</button>
+                            <select id="loadSelect">
+                                <option value="" disabled selected>Load Project</option>
+                            </select>
+                            <button id="deleteBtn" disabled>Delete</button>
+                            <button id="exportBtn">Export</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="editor-panel active" id="html-panel" role="tabpanel">
+                    <textarea id="code-html"></textarea>
+                </div>
+                <div class="editor-panel" id="css-panel" role="tabpanel">
+                    <textarea id="code-css"></textarea>
+                </div>
+                <div class="editor-panel" id="js-panel" role="tabpanel">
+                    <textarea id="code-js"></textarea>
+                </div>
+                
+            </div>
+                <div class="preview-section">
+                <iframe id="preview-frame"></iframe>
+                </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+        
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
+    

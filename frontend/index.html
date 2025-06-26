@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - CodeCanvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .typing-animated {
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+  <!-- Top Nav -->
+  <header class="w-full flex justify-between items-center px-8 py-4 border-b border-gray-800">
+    <h2> <span class="bg-gradient-to-r from-teal-400 via-purple-400 to-red-400 text-transparent bg-clip-text">CodeCanvas</span></h2>
+    <div class="space-x-3">
+      <a href="{{ url_for('login') }}" class="px-3 py-1 text-green-400 border border-green-400 rounded hover:bg-green-600 hover:text-white text-xs transition">Login</a>
+<a href="{{ url_for('register') }}" class="px-3 py-1 text-blue-400 border border-blue-400 rounded hover:bg-blue-600 hover:text-white text-xs transition">Signup</a>
+
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="w-full flex flex-col lg:flex-row items-center justify-between px-8 py-12 gap-10">
+
+    <!-- Left Panel -->
+    <section class="lg:w-1/2">
+      <h2 class="text-4xl font-bold mb-3">
+        <span class="text-white">Welcome to </span>
+        <span class="bg-gradient-to-r from-teal-400 via-purple-400 to-red-400 text-transparent bg-clip-text">CodeCanvas</span>
+      </h2>
+      <p class="italic text-lg text-gray-400 mb-2">Learn by Creating. Build by Exploring.</p>
+      <p class="text-gray-300 max-w-xl mb-4">
+        Step into a smarter way to code. CodeCanvas is an interactive front-end playground designed to 
+        empower students, developers, and creators to learn, experiment, and innovate with HTML, CSS, and 
+        JavaScript — all in real-time.
+      </p>
+      <p id="typingText" class="text-sm font-mono text-gray-500 mb-4"></p>
+
+      <button 
+        id="startBtn"
+        class="hidden mt-2 px-3 py-2 bg-gradient-to-r from-teal-500 via-purple-500 to-red-500 
+               text-white font-semibold rounded-full shadow-lg transition duration-300 
+               ease-in-out hover:scale-105 hover:shadow-xl hover:from-teal-400 hover:to-pink-500"
+      >
+        🚀 Start Coding Now
+      </button>
+    </section>
+
+    <!-- Right Cards -->
+    <section class="relative lg:w-1/2 flex justify-center">
+      <!-- Background Container -->
+      <div class="bg-[#1c1c1c] backdrop-blur-md rounded-xl p-4 w-[430px] h-[485px] relative shadow-2xl border border-gray-700">
+
+        <!-- HTML Card -->
+        <div class="absolute top-3 left-8 bg-[#2b2b2b] hover:scale-105 hover:shadow-pink-500/40 transition transform rounded-md p-3 w-[340px] h-[150px] shadow-md border border-gray-700">
+          <div class="flex justify-between items-center mb-1 text-sm text-pink-400">
+            <span class="flex items-center"><span class="mr-2">⚙️</span> HTML</span>
+          </div>
+          <code class="text-white text-xs">&lt;div class="editor"&gt;&lt;/div&gt;</code>
+        </div>
+
+        <!-- CSS Card -->
+        <div class="absolute top-40 left-20 bg-[#2b2b2b] hover:scale-105 hover:shadow-blue-500/30 transition transform rounded-md p-3 w-[340px] h-[160px] shadow-md border border-gray-700 no-scrollbar overflow-hidden">
+          <div class="flex justify-between items-center mb-1 text-sm text-blue-400">
+            <span class="flex items-center"><span class="mr-2">⚙️</span> CSS</span>
+          </div>
+          <pre class="text-white text-xs typing-animated" id="cssTyping"></pre>
+        </div>
+
+        <!-- JavaScript Card -->
+        <div class="absolute top-[321px] left-8 bg-[#2b2b2b] hover:scale-105 hover:shadow-yellow-400/40 transition transform rounded-md p-3 w-[340px] h-[150px] shadow-md border border-gray-700">
+          <div class="flex justify-between items-center mb-1 text-sm text-yellow-400">
+            <span class="flex items-center"><span class="mr-2">⚙️</span> JavaScript</span>
+          </div>
+          <code class="text-white text-xs">let theme = "dark";
+const launch = () => console.log("Launching CodeCanvas...");</code>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Typing Scripts -->
+  <script>
+    const typingText = document.getElementById("typingText");
+    const welcomeMessage = "Preparing your coding space...";
+    let index = 0;
+
+    function typeWelcome() {
+      if (index < welcomeMessage.length) {
+        typingText.textContent += welcomeMessage.charAt(index);
+        index++;
+        setTimeout(typeWelcome, 45);
+      } else {
+        document.getElementById("startBtn").classList.remove("hidden");
+      }
+    }
+    startBtn.addEventListener("click", function (e) {
+        
+        startBtn.innerHTML = `
+          <svg class="animate-spin h-5 w-5 mr-2 inline-block text-white" 
+               xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" 
+                    stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" 
+                  d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg> Loading...`;
+
+        setTimeout(() => {
+          window.location.href = "/register";  // Flask route
+        }, 1200);
+      });
+
+    const cssCode = `body {
+  background: linear-gradient(
+    135deg,
+    #1c1c1c 0%,
+    #2b2b2b 100%
+  );
+  font-family: 'Courier New', monospace;
+}`;
+
+    const cssTyping = document.getElementById("cssTyping");
+    let cssIndex = 0;
+
+    function typeCSS() {
+      if (cssIndex < cssCode.length) {
+        cssTyping.textContent += cssCode.charAt(cssIndex);
+        cssIndex++;
+        setTimeout(typeCSS, 45);
+      }
+    }
+
+    window.onload = () => {
+      typeWelcome();
+      typeCSS();
+    };
+    
+  </script>
+</body>
+</html>

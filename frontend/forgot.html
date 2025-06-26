@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password - CodeCanvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+  <!-- Gradient Border Wrapper -->
+  <div class="p-[2px] rounded-xl bg-gradient-to-r from-teal-400 via-purple-600 to-red-400 shadow-lg">
+    <!-- Actual Box -->
+    <div class="w-full max-w-md p-8 bg-gray-800 rounded-xl shadow-xl hover:shadow-yellow-500/30 transition duration-300 fade-in border border-gray-700">
+      <h2 class="text-2xl font-bold mb-6 text-center">Reset Your Password</h2>
+
+      <form id="forgotForm" class="space-y-5">
+        <input
+          id="emailInput"
+          class="w-full px-4 py-2 rounded bg-gray-700 text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 hover:ring hover:ring-yellow-400"
+          type="email"
+          name="email"
+          placeholder="Enter your registered email"
+          required
+        />
+        <button
+          type="submit"
+          class="w-full py-2 bg-gradient-to-r from-teal-500 via-purple-500 to-red-400 hover:scale-105 transform transition duration-300 ease-in-out rounded text-white font-semibold shadow text-sm">
+          📩 Send Reset Link
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <p class="mt-6 text-sm text-center">
+        Remembered your password?
+        <a href="{{ url_for('login') }}" class="inline-block px-3 py-1 text-yellow-400 border border-yellow-400 rounded hover:bg-yellow-600 hover:text-white text-xs transition duration-300">
+          Login
+        </a>
+      </p>
+
+      <!-- Feedback Message -->
+      <div id="responseMessage" class="mt-4 text-center text-sm"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('emailInput').value;
+      const responseMsg = document.getElementById('responseMessage');
+      responseMsg.textContent = 'Sending reset link...';
+      responseMsg.className = "mt-4 text-center text-yellow-400";
+
+      try {
+        const res = await fetch('/api/send-reset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          responseMsg.textContent = data.message;
+          responseMsg.className = "mt-4 text-center text-green-400";
+        } else {
+          responseMsg.textContent = data.error || 'Something went wrong.';
+          responseMsg.className = "mt-4 text-center text-red-400";
+        }
+      } catch (err) {
+        responseMsg.textContent = 'Failed to send reset link.';
+        responseMsg.className = "mt-4 text-center text-red-400";
+      }
+    });
+  </script>
+</body>
+</html>
